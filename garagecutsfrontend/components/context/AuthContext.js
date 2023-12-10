@@ -29,7 +29,7 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
 
-  console.log("auth");
+  console.log("auth", auth.currentUser?.displayName);
   const [user, setUser] = useState(null);
 
   const googleSignIn = () => {

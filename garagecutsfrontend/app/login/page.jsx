@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 //Importing the useContext FUNCTION so we can get the values accessible.
 import { UserAuth } from "../../components/context/AuthContext.js";
+import { LoadingSetter } from "../../components/context/LoadingContact";
 
 //We use useNavigate to go through the dom but the 'routes' have to be assigned higher in the tree
 //Routes are assigned in /src/app.js
@@ -20,6 +21,10 @@ const Login = () => {
   //HOW TO USE CONTEXT LIBRARY STATE MANAGEMENT
   //Call UserAuth to get access to its function and state in its 'component context'
   const { googleSignIn, loginAccount, user } = UserAuth();
+  const { loading, setLoading } = LoadingSetter();
+
+  console.log(loading);
+
   const router = useRouter();
 
   const handleGoogleSignIn = () => {
@@ -32,6 +37,7 @@ const Login = () => {
     if (user !== null) {
       console.log("USER?", user);
       router.push("/account");
+      setLoading(false);
     }
   }, [user]);
 
@@ -101,7 +107,7 @@ const Login = () => {
               <div className="flex justify-between">
                 <div>
                   <h4 className="text-xs">
-                    Don't have an account?{" "}
+                    Dont have an account?{" "}
                     <div
                       className="text-blue-600 inline-block text-xs"
                       onClick={() => {
@@ -114,6 +120,8 @@ const Login = () => {
                 </div>
                 <h1
                   onClick={() => {
+                    // setLoading(true);
+                    router.push("/load");
                     handleGoogleSignIn();
                   }}
                 >
