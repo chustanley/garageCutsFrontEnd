@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 //Importing the useContext FUNCTION so we can get the values accessible.
 import { UserAuth } from "../../components/context/AuthContext.js";
-import { LoadingSetter } from "../../components/context/LoadingContact";
 
 //We use useNavigate to go through the dom but the 'routes' have to be assigned higher in the tree
 //Routes are assigned in /src/app.js
@@ -14,10 +13,6 @@ import { LoadingSetter } from "../../components/context/LoadingContact";
 import Signup from "./Signup.jsx";
 
 const Login = () => {
-  // //HOW TO USE REDUX STATE MANAGEMENT LIBRARY
-  // const account = useSelector((state) => state.account.value);
-  // const dispatch = useDispatch();
-
   //HOW TO USE CONTEXT LIBRARY STATE MANAGEMENT
   //Call UserAuth to get access to its function and state in its 'component context'
   const { googleSignIn, loginAccount, user } = UserAuth();

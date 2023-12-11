@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import Navbar from "../../components/Navbar";
-import Protected from "./Protected";
+
+import Protected from "../../components/Protected";
 
 //Importing the useContext FUNCTION so we can get the values accessible.
 import { UserAuth } from "../../components/context/AuthContext.js";
