@@ -21,13 +21,11 @@ const Login = () => {
   //HOW TO USE CONTEXT LIBRARY STATE MANAGEMENT
   //Call UserAuth to get access to its function and state in its 'component context'
   const { googleSignIn, loginAccount, user } = UserAuth();
-  const { loading, setLoading } = LoadingSetter();
-
-  console.log(loading);
 
   const router = useRouter();
 
   const handleGoogleSignIn = () => {
+    router.push("/load");
     googleSignIn();
   };
 
@@ -37,7 +35,6 @@ const Login = () => {
     if (user !== null) {
       console.log("USER?", user);
       router.push("/account");
-      setLoading(false);
     }
   }, [user]);
 
@@ -120,8 +117,6 @@ const Login = () => {
                 </div>
                 <h1
                   onClick={() => {
-                    // setLoading(true);
-                    router.push("/load");
                     handleGoogleSignIn();
                   }}
                 >

@@ -1,7 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Navbar from "../../components/Navbar";
-import Image from "next/image";
 
 //Importing the useContext FUNCTION so we can get the values accessible.
 import { UserAuth } from "../../components/context/AuthContext.js";
@@ -20,15 +18,9 @@ const Load = () => {
   console.log(user?.displayName);
   return (
     <>
-      <Navbar />
       <div className="md:w-full md:h-screen md:items-center md:mt-0 md:mb-0  mt-40 mb-20">
         <div className="max-w-[1240px] w-full h-full flex mx-auto justify-center items-center">
-          <Image
-            src="/hamster-loader.gif"
-            alt="My Image"
-            width={300}
-            height={200}
-          />
+          <h1>LOADING . . .</h1>
         </div>
       </div>
     </>
