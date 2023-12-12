@@ -10,7 +10,7 @@ import { getAuth } from "firebase/auth";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCItRU5I_QND---fiZZG1ASmkZoxlqrMFg",
-  authDomain: "garagecuts-14990.firebaseapp.com",
+  authDomain: "https://garage-cuts-front-end-chustanley.vercel.app",
   projectId: "garagecuts-14990",
   storageBucket: "garagecuts-14990.appspot.com",
   messagingSenderId: "27041208733",
