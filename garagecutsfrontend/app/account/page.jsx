@@ -13,8 +13,6 @@ const Account = () => {
   const { user } = UserAuth();
   const router = useRouter();
 
-  console.log(window.location.pathname);
-
   console.log(user);
   return (
     <>
