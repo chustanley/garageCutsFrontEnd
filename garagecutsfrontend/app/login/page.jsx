@@ -31,7 +31,7 @@ const Login = () => {
       console.log("USER?", user);
       router.push("/account");
     }
-  }, [router, user]);
+  }, [user]);
 
   // Login Credentials
   const [loginUser, setLoginUser] = useState("");

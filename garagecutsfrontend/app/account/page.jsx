@@ -22,7 +22,11 @@ const Account = () => {
           <div className="max-w-[1240px] w-full h-full flex flex-col mx-auto justify-center items-center p-5">
             <div className="flex flex-row items-center my-10">
               <Image
-                src={user?.photoURL}
+                src={
+                  user?.photoURL
+                    ? user?.photoURL
+                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                }
                 alt="profile_picture"
                 width={200}
                 height={200}
