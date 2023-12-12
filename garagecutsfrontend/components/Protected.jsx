@@ -8,7 +8,7 @@ const Protected = ({ children }) => {
   const { user } = UserAuth();
   const router = useRouter();
 
-  if (!user) {
+  if (!user && typeof window !== "undefined") {
     router.push("/");
     return;
   }
