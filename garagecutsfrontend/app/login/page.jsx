@@ -26,12 +26,12 @@ const Login = () => {
 
   //User is in the Context Library and is a global state, any change to it NOT being null will trigger
   //Navigation to account page
-  useEffect(() => {
-    if (user !== null) {
-      console.log("USER?", user);
-      router.push("/account");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user !== null) {
+  //     console.log("USER?", user);
+  //     router.push("/account");
+  //   }
+  // }, [user]);
 
   // Login Credentials
   const [loginUser, setLoginUser] = useState("");

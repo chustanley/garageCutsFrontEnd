@@ -52,6 +52,7 @@ export const AuthContextProvider = ({ children }) => {
           throw data;
         }
         console.log("LOGIN ACCOUNT SUCCESS", data);
+        router.push("/account");
       })
       .catch((err) => {
         console.log("LOGINACCOUNT FAIL", err);
