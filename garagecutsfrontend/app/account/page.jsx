@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Image from "next/image";
 
@@ -7,9 +7,13 @@ import Protected from "../../components/Protected";
 
 //Importing the useContext FUNCTION so we can get the values accessible.
 import { UserAuth } from "../../components/context/AuthContext.js";
+import { useRouter } from "next/navigation";
 
 const Account = () => {
   const { user } = UserAuth();
+  const router = useRouter();
+
+  console.log(window.location.pathname);
 
   console.log(user);
   return (
