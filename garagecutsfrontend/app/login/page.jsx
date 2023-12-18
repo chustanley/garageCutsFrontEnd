@@ -28,7 +28,7 @@ const Login = () => {
   //Navigation to account page
   useEffect(() => {
     if (user !== null) {
-      console.log("USER?", user);
+      console.log("USER?", user.uid);
       router.push("/account");
     }
   }, [user]);

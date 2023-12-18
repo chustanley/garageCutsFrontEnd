@@ -9,6 +9,9 @@ import {
   signOut,
   onAuthStateChanged,
 } from "@firebase/auth";
+
+const axios = require("axios");
+
 import { auth } from "./firebase.js";
 
 import { useRouter } from "next/navigation";
@@ -29,11 +32,10 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
 
-  console.log("auth", auth.currentUser?.displayName);
   const [user, setUser] = useState(null);
+  const [conversation, setConversation] = useState([]);
 
   const googleSignIn = () => {
-    console.log("test");
     const provider = new GoogleAuthProvider();
 
     // Initiate the Google sign-in redirect
@@ -65,10 +67,75 @@ export const AuthContextProvider = ({ children }) => {
    The clean up function is then executed
   */
 
+  //This prevents duplication.
+  const firstConversation = async (currentUser) => {
+    try {
+      const conversation = await axios.get(
+        `http://localhost:8800/api/conversations/${currentUser?.uid}`,
+      );
+
+      if (conversation.data.length === 0) {
+        console.log("hi", currentUser.displayName);
+        const createConversation = await axios.post(
+          `http://localhost:8800/api/conversations/`,
+          {
+            senderId: currentUser.uid,
+            recieverId: "JGWXQ59ZU0Qtm3F8bpSnomOvTWr2",
+            senderName: currentUser.displayName,
+          },
+        );
+
+        console.log(createConversation);
+        setConversation([createConversation.data]);
+      } else {
+        throw conversation.data;
+      }
+    } catch (err) {
+      //If conversation exist, here is the convoID that is related to the 2 users.
+
+      const totalConversations = err;
+
+      setConversation(totalConversations);
+    }
+  };
+
+  /*
+  Display name shown only when logged in with google or from main page / not account creation.
+  */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("user", currentUser);
+
+      console.log(currentUser?.displayName);
+      /* This will get called when account created, login and google login..  */
+
+      console.log(currentUser.uid !== "JGWXQ59ZU0Qtm3F8bpSnomOvTWr2");
+
+      if (
+        currentUser?.displayName !== null &&
+        currentUser?.displayName !== undefined
+      ) {
+        console.log("we got here");
+        console.log(currentUser);
+        console.log(currentUser?.uid);
+        if (
+          currentUser !== null &&
+          currentUser.uid !== "JGWXQ59ZU0Qtm3F8bpSnomOvTWr2"
+        ) {
+          console.log("not stanley");
+          firstConversation(currentUser);
+        } else {
+          axios
+            .get(`http://localhost:8800/api/conversations/${currentUser?.uid}`)
+            .then((data) => {
+              if (!data) throw data;
+              setConversation(data.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
     });
 
     return () => {
@@ -78,7 +145,15 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ googleSignIn, logOut, user, loginAccount, setUser }}
+      value={{
+        googleSignIn,
+        logOut,
+        user,
+        loginAccount,
+        setUser,
+        conversation,
+        setConversation,
+      }}
     >
       {children}
     </AuthContext.Provider>
