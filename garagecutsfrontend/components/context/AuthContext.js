@@ -71,13 +71,13 @@ export const AuthContextProvider = ({ children }) => {
   const firstConversation = async (currentUser) => {
     try {
       const conversation = await axios.get(
-        `https://3.144.250.206:8800/api/conversations/${currentUser?.uid}`,
+        `https://3.144.250.206:3443/api/conversations/${currentUser?.uid}`,
       );
 
       if (conversation.data.length === 0) {
         console.log("hi", currentUser.displayName);
         const createConversation = await axios.post(
-          `https://3.144.250.206:8800/api/conversations/`,
+          `https://3.144.250.206:3443/api/conversations/`,
           {
             senderId: currentUser.uid,
             recieverId: "JGWXQ59ZU0Qtm3F8bpSnomOvTWr2",
@@ -127,7 +127,7 @@ export const AuthContextProvider = ({ children }) => {
         } else {
           axios
             .get(
-              `https://3.144.250.206:8800/api/conversations/${currentUser?.uid}`,
+              `https://3.144.250.206:3443/api/conversations/${currentUser?.uid}`,
             )
             .then((data) => {
               if (!data) throw data;

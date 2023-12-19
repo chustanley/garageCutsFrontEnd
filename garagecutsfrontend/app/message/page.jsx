@@ -66,7 +66,7 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
     const getMessages = async () => {
       try {
         const res = await axios.get(
-          "https://3.144.250.206:8800/api/messages/" + currentConversation._id,
+          "https://3.144.250.206:3443/api/messages/" + currentConversation._id,
         );
         console.log(res.data);
         setMessages(res.data);
@@ -118,7 +118,7 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
 
     try {
       const res = await axios.post(
-        "https://3.144.250.206:8800/api/messages",
+        "https://3.144.250.206:3443/api/messages",
         message,
       );
       console.log("new message", res.data);
