@@ -66,7 +66,7 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
     const getMessages = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8800/api/messages/" + currentConversation._id,
+          "http://3.144.250.206:8800/api/messages/" + currentConversation._id,
         );
         console.log(res.data);
         setMessages(res.data);
@@ -75,7 +75,7 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
       }
     };
     getMessages();
-  }, [currentConversation]);
+  }, [currentConversation, conversation]);
 
   //ON LOAD, WE SET THE CURRENT CONVO TO THE FIRST ONE ON THE LIST AT ALL TIMES..
   useEffect(() => {
@@ -86,7 +86,7 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
       console.log(conversation[0]);
       setCurrentConversation(conversation[0]);
     }
-  }, [conversation]);
+  }, [conversation, user?.uid]);
 
   //Smooth scrolling
   useEffect(() => {
@@ -118,7 +118,7 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
 
     try {
       const res = await axios.post(
-        "http://localhost:8800/api/messages",
+        "http://3.144.250.206:8800/api/messages",
         message,
       );
       console.log("new message", res.data);
@@ -141,8 +141,9 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
               {/* messages transaction */}
               <div className="bg-white h-[70%] my-10 p-5 overflow-y-scroll rounded-xl">
                 {messages.map((m) => {
+                  console.log(m);
                   return (
-                    <div ref={scrollRef}>
+                    <div ref={scrollRef} key={m.created}>
                       <Message message={m} own={m.sender === user?.uid} />
                     </div>
                   );
@@ -175,8 +176,12 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
                 //FOR each conversaion related to one user, we will pass the currentUser to it and also the conversation data for EACH conversation.
                 //When any of them are clicked, we update the currentChat with the value inside of conversations
                 //Upon click, currentChat will be updated with a new message:[user1, you]
+
+                console.log(c);
+
                 return (
                   <div
+                    key={1}
                     onClick={() => {
                       setCurrentConversation(c);
                     }}
@@ -194,7 +199,7 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
                   <div className="bg-white h-[70%] my-10 p-5 overflow-y-scroll rounded-xl">
                     {messages.map((m) => {
                       return (
-                        <div ref={scrollRef}>
+                        <div ref={scrollRef} key={1}>
                           <Message message={m} own={m.sender === user?.uid} />
                         </div>
                       );
