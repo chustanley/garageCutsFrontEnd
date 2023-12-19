@@ -30,7 +30,7 @@ const Messaging = () => {
   }, [arrivalMessage]);
 
   useEffect(() => {
-    socket.current = io("ws://3.144.250.206:8900");
+    socket.current = io("wss://3.144.250.206:8900");
     //THIS IS SETTING UP AN EVENT LISTENER? I DONT THINK IT TRIGGERS ON FIRST RENDER UNTIL A MESSAGE IS SENT
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
