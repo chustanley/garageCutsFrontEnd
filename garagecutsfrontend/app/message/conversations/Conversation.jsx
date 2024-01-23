@@ -3,9 +3,6 @@ import "./conversation.css";
 import axios from "axios";
 
 const Conversation = ({ conversation, currentUser }) => {
-  console.log(conversation);
-  console.log(currentUser);
-
   return (
     <div className="conversation">
       <img

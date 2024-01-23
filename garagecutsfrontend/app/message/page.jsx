@@ -8,6 +8,7 @@ import { UserAuth } from "../../components/context/AuthContext.js";
 const axios = require("axios");
 
 import { io } from "socket.io-client";
+import MainConversation from "./conversations/MainConversation";
 
 const Messaging = () => {
   const { conversation, setConversation, user } = UserAuth();
@@ -17,13 +18,11 @@ const Messaging = () => {
   const scrollRef = useRef();
 
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [showMessage, setShowMessage] = useState(false);
 
   const socket = useRef();
 
-  console.log(conversation);
-
   console.log(currentConversation);
-  console.log(user?.uid);
 
   useEffect(() => {
     console.log("arrival message", arrivalMessage);
@@ -137,42 +136,33 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
     <>
       <Navbar />
       {user?.uid !== "JGWXQ59ZU0Qtm3F8bpSnomOvTWr2" ? (
-        <div className="md:w-full md:h-screen md:items-center md:mt-0 md:mb-0  mt-40 mb-20">
-          <div className="max-w-[1240px] w-full h-full flex mx-auto justify-center items-center">
-            <div className="h-[70%] bg-gray-300 mt-[5%] w-[60%] rounded-xl p-5">
-              <h1>TALKING TO STANLEY</h1>
-              {/* messages transaction */}
-              <div className="bg-white h-[70%] my-10 p-5 overflow-y-scroll rounded-xl">
-                {messages.map((m) => {
-                  console.log(m);
-                  return (
-                    <div ref={scrollRef} key={m.created}>
-                      <Message message={m} own={m.sender === user?.uid} />
-                    </div>
-                  );
-                })}
-              </div>
-              {/* SEND THE MESSAGE */}
-              <div className="">
-                <textarea
-                  className="w-[50%]"
-                  onChange={(e) => {
-                    setNewMessage(e.target.value);
-                  }}
-                  value={newMessage}
-                ></textarea>
-                <button
-                  className="px-3 bg-white rounded-md"
-                  onClick={handleSubmit}
-                >
-                  send
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <>
+          <MainConversation
+            currentConversation={currentConversation}
+            messages={messages}
+            setShowMessage={setShowMessage}
+            setNewMessage={setNewMessage}
+            newMessage={newMessage}
+            handleSubmit={handleSubmit}
+            user={user}
+            setMessages={setMessages}
+          />
+        </>
+      ) : showMessage ? (
+        <>
+          <MainConversation
+            currentConversation={currentConversation}
+            messages={messages}
+            setShowMessage={setShowMessage}
+            setNewMessage={setNewMessage}
+            newMessage={newMessage}
+            handleSubmit={handleSubmit}
+            user={user}
+            setMessages={setMessages}
+          />
+        </>
       ) : (
-        <div className="md:w-full md:h-screen md:items-center md:mt-0 md:mb-0  mt-40 mb-20">
+        <div className="">
           <div className="max-w-[1240px] w-full h-full flex mx-auto justify-center items-center">
             <div>
               {conversation.map((c) => {
@@ -180,12 +170,11 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
                 //When any of them are clicked, we update the currentChat with the value inside of conversations
                 //Upon click, currentChat will be updated with a new message:[user1, you]
 
-                console.log(c);
-
                 return (
                   <div
                     key={1}
                     onClick={() => {
+                      setShowMessage(true);
                       setCurrentConversation(c);
                     }}
                   >
@@ -194,43 +183,6 @@ When someone logs in that isnt stanley chu. assign the current convo to that.
                 );
               })}
             </div>
-            <>
-              {currentConversation ? (
-                <div className="h-[70%] bg-gray-300 mt-[5%] w-[60%] rounded-xl p-5">
-                  <h1>{currentConversation?.members[2]}</h1>
-                  {/* messages transaction */}
-                  <div className="bg-white h-[70%] my-10 p-5 overflow-y-scroll rounded-xl">
-                    {messages.map((m) => {
-                      return (
-                        <div ref={scrollRef} key={1}>
-                          <Message message={m} own={m.sender === user?.uid} />
-                        </div>
-                      );
-                    })}
-                  </div>
-                  {/* SEND THE MESSAGE */}
-                  <div className="">
-                    <textarea
-                      className="w-[50%]"
-                      onChange={(e) => {
-                        setNewMessage(e.target.value);
-                      }}
-                      value={newMessage}
-                    ></textarea>
-                    <button
-                      className="px-3 bg-white rounded-md"
-                      onClick={handleSubmit}
-                    >
-                      send
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <h1>please select convo</h1>
-                </>
-              )}
-            </>
           </div>
         </div>
       )}
